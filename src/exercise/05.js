@@ -60,17 +60,9 @@ function App() {
 
   // this is the custom reducer
   function toggleStateReducer(state, action) {
-    switch (action.type) {
-      case 'toggle': {
-        return clickedTooMuch ? {on: state.on} : {on: !state.on}
-      }
-      case 'reset': {
-        return {on: false}
-      }
-      default: {
-        throw new Error(`Unsupported type: ${action.type}`)
-      }
-    }
+    return action.type === 'toggle' && timesClicked >= 4
+      ? {on: state.on}
+      : toggleReducer(state, action)
   }
 
   const {on, getTogglerProps, getResetterProps} = useToggle({
